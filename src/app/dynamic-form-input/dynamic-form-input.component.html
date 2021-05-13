@@ -1,38 +1,138 @@
 <div [formGroup]="form" class="form-group">
 
-    <div [ngSwitch]="input.controlType">
+  <div [ngSwitch]="input.controlType">
 
-      <div *ngSwitchCase="'textbox'">
-        <label [attr.for]="input.key">{{input.label}}</label>
-        <input class="form-control" [formControlName]="input.key" [id]="input.key" [type]="input.type">
-      </div>
-  
-      <div *ngSwitchCase="'dropdown'">
-        <label [attr.for]="input.key">{{input.label}}</label>
-        <select class="custom-select" [id]="input.key" [formControlName]="input.key">
-          <option *ngFor="let opt of input.options" [value]="opt.key">{{opt.value}}</option>
-        </select>
-      </div>
-
-      <div *ngSwitchCase="'checkbox'">
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" [formControlName]="input.key" [id]="input.key">
-          <label class="form-check-label" [attr.for]="input.key">{{input.label}}</label>
+    <div *ngSwitchCase="'prenume'">
+      <label class="form-label" [attr.for]="input.key">{{input.label}}</label>
+      <input class="form-control" [formControlName]="input.key" [id]="input.key" [type]="input.type"
+             [placeholder]="input.placeholder"
+             [ngClass]="{ 'is-invalid': key.errors && (key.touched || key.dirty || isSubmitted), 'is-valid': key.valid }">
+      <div class="invalid-feedback">
+        <div *ngIf="key.errors?.required">Prenumele este obligatoriu</div>
+        <div *ngIf="key.errors?.minlength">Lungimea minimă este de
+          {{key.errors?.minlength.requiredLength}} caractere, mai sunt necesare
+          {{key.errors?.minlength.requiredLength - key.errors?.minlength.actualLength}} caractere
         </div>
       </div>
+    </div>
 
-      <div *ngSwitchCase="'radio'">
-        <div class="form-check form-check-inline" *ngFor="let opt of input.options">
-          <input class="form-check-input" type="radio" [formControlName]="input.key" [id]="input.key" [value]="opt.value">
-          <label class="form-check-label" [attr.for]="opt.key"> {{ opt.value }} </label>
+    <div *ngSwitchCase="'nume'">
+      <label class="form-label" [attr.for]="input.key">{{input.label}}</label>
+      <input class="form-control" [formControlName]="input.key" [id]="input.key" [type]="input.type"
+             [placeholder]="input.placeholder"
+             [ngClass]="{ 'is-invalid': key.errors && (key.touched || key.dirty || isSubmitted), 'is-valid': key.valid }">
+      <div class="invalid-feedback">
+        <div *ngIf="key.errors?.required">Numele este obligatoriu</div>
+        <div *ngIf="key.errors?.minlength">Lungimea minimă este de
+          {{key.errors?.minlength.requiredLength}} caractere, mai sunt necesare
+          {{key.errors?.minlength.requiredLength - key.errors?.minlength.actualLength}} caractere
         </div>
       </div>
+    </div>
 
-      <div *ngSwitchCase="'textarea'">
-        <label [attr.for]="input.key">{{input.label}}</label>
-        <textarea class="form-control" [formControlName]="input.key" [id]="input.key" rows="5"></textarea>
+    <div *ngSwitchCase="'telefon'">
+      <label class="form-label" [attr.for]="input.key">{{input.label}}</label>
+      <input class="form-control" [formControlName]="input.key" [id]="input.key" [type]="input.type"
+             [placeholder]="input.placeholder" (keypress)="onlyNumbers($event)"
+             [ngClass]="{ 'is-invalid': key.errors && (key.touched || key.dirty || isSubmitted), 'is-valid': key.valid }">
+      <div class="invalid-feedback">
+        <div *ngIf="key.errors?.required">Telefonul este obligatoriu</div>
+        <div *ngIf="key.errors?.minlength && !key.errors?.pattern">Minim 10 cifre</div>
+        <div *ngIf="key.errors?.maxlength && !key.errors?.pattern">Maxim 10 cifre</div>
+        <div *ngIf="key.errors?.pattern">Exclusiv cifre</div>
       </div>
-  
+    </div>
+
+    <div *ngSwitchCase="'email'">
+      <label class="form-label" [attr.for]="input.key">{{input.label}}</label>
+      <input class="form-control" [formControlName]="input.key" [id]="input.key" [type]="input.type"
+             [placeholder]="input.placeholder"
+             [ngClass]="{ 'is-invalid': key.errors && (key.touched || key.dirty || isSubmitted), 'is-valid': key.valid }">
+      <div class="invalid-feedback">
+        <div *ngIf="key.errors?.required">E-mailul este obligatoriu</div>
+        <div *ngIf="key.errors?.email">E-mailul trebuie să fie o adresă de e-mail validă</div>
+      </div>
+    </div>
+
+    <div *ngSwitchCase="'nascut'">
+      <label class="form-label" [attr.for]="input.key">{{input.label}}</label>
+      <input class="form-control" [formControlName]="input.key" [id]="input.key" [type]="input.type"
+             [placeholder]="input.placeholder"
+             [ngClass]="{ 'is-invalid': key.errors && (key.touched || key.dirty || isSubmitted), 'is-valid': key.valid }">
+      <div class="invalid-feedback">
+        <div *ngIf="key.errors?.required">Data nașterii este obligatorie</div>
+        <div *ngIf="key.errors?.pattern">Data nașterii trebuie să fie o dată validă, în formatul ZZ-LL-AAAA
+        </div>
+      </div>
+    </div>
+
+    <div *ngSwitchCase="'functie'">
+      <label class="form-label" [attr.for]="input.key">{{input.label}}</label>
+      <input class="form-control" list="datalistOptions" [formControlName]="input.key" [type]="input.type"
+             [placeholder]="input.placeholder"
+             [ngClass]="{ 'is-invalid': key.errors && (key.touched || key.dirty || isSubmitted), 'is-valid': key.valid }">
+      <datalist id="datalistOptions">
+        <option *ngFor="let datalist of input.datalists" [value]="datalist.value">
+      </datalist>
+      <div class="invalid-feedback">
+        <div *ngIf="key.errors?.required">Funcția este obligatorie</div>
+        <div *ngIf="key.errors?.pattern">Sunt permise doar caractere din aflabet și caracterele speciale /
+          ( )
+        </div>
+      </div>
+    </div>
+
+    <div *ngSwitchCase="'oras'">
+      <label class="form-label" [attr.for]="input.key">{{input.label}}</label>
+      <select class="form-select" [id]="input.key" [formControlName]="input.key"
+              [ngClass]="{ 'is-invalid': key.errors && (key.touched || key.dirty || isSubmitted), 'is-valid': key.valid }">
+        <option selected disabled value="">Alege...</option>
+        <option *ngFor="let opt of input.options" [value]="opt.key">{{opt.value}}</option>
+      </select>
+      <div class="invalid-feedback">
+        <div *ngIf="key.errors?.required">Orașul este obligatoriu</div>
+      </div>
+    </div>
+
+    <div *ngSwitchCase="'observatii'">
+      <label class="form-label" [attr.for]="input.key">{{input.label}}</label>
+      <textarea class="form-control" [formControlName]="input.key" [id]="input.key" [placeholder]="input.placeholder" rows="2"
+                [ngClass]="{ 'is-invalid': key.errors && (key.touched || key.dirty || isSubmitted), 'is-valid': key.valid }"></textarea>
+      <div class="invalid-feedback">
+        <div *ngIf="key.errors?.required">Observațiile este obligatorii</div>
+        <div *ngIf="key.errors?.minlength">Lungimea minimă este
+          de {{key.errors?.minlength.requiredLength}} caractere,
+          mai sunt
+          necesare {{key.errors?.minlength.requiredLength - key.errors?.minlength.actualLength}}
+          caractere
+        </div>
+      </div>
+    </div>
+
+    <div *ngSwitchCase="'tipApel'">
+      <label class="form-label pt-0" [attr.for]="input.key">{{input.label}}</label>
+      <div class="form-check" *ngFor="let opt of input.options">
+        <input class="form-check-input" type="radio" [formControlName]="input.key" [id]="input.key" [value]="opt.key"
+               [ngClass]="{ 'is-invalid': key.errors && (key.touched || key.dirty || isSubmitted), 'is-valid': key.valid }">
+        <label class="form-check-label" [attr.for]="opt.key"> {{ opt.value }} </label>
+        <div class="invalid-feedback">
+          <div *ngIf="key.errors?.required">Alege un tip apel</div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngSwitchCase="'gdpr'">
+      <label class="form-label" [attr.for]="input.key">{{input.label}}</label>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" [formControlName]="input.key" [id]="input.key"
+               [ngClass]="{ 'is-invalid': key.errors && (key.touched || key.dirty || isSubmitted), 'is-valid': key.valid }">
+        <label class="form-check-label" [attr.for]="input.key">{{ input.checkLabel }}</label>
+        <div class="invalid-feedback">
+          <div *ngIf="key.errors?.required">Confirmarea este obligatorie</div>
+        </div>
+      </div>
     </div>
 
   </div>
+
+</div>

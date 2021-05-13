@@ -13,6 +13,7 @@ export class DynamicFormComponent implements OnInit {
   @Input() formFields: FormField<string>[] = [];
   form: FormGroup;
   payLoad = '';
+  isSubmitted = false;
 
   constructor(private formfieldService: FormfieldControlService) { }
 
@@ -20,8 +21,21 @@ export class DynamicFormComponent implements OnInit {
     this.form = this.formfieldService.toFormGroup(this.formFields);
   }
 
-  onSubmit() {
+  onSubmit = (): void => {
+    this.isSubmitted = true;
+    // stop here if form is invalid
+    if (this.form.invalid) {
+      console.log('FAILED!!');
+      return;
+    }
     this.payLoad = JSON.stringify(this.form.getRawValue());
+    // display form values on success
+    alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.form.value, null, 4));
+  }
+
+  onReset = (): void => {
+    this.isSubmitted = false;
+    this.form.reset();
   }
 
 }

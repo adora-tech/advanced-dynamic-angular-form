@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { FormField } from '../form-field';
+import {Component, Input, OnInit} from '@angular/core';
+import {FormGroup} from '@angular/forms';
+import {FormField} from '../form-field';
 
 @Component({
   selector: 'app-dynamic-form-input',
@@ -11,7 +11,19 @@ export class DynamicFormInputComponent {
 
   @Input() input: FormField<string>;
   @Input() form: FormGroup;
-  
-  get isValid() { return this.form.controls[this.input.key].valid; }
+
+  @Input() isSubmitted: boolean;
+
+  get key() {
+    return this.form.controls[this.input.key];
+  }
+
+  onlyNumbers = (event: any) => {
+    const pattern = /[0-9+\- ]/;
+    const inputChar = String.fromCharCode(event.keyCode);
+    if (event.keyCode !== 8 && !pattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
 
 }
