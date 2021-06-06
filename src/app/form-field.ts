@@ -6,6 +6,7 @@ export class FormField<T> {
   placeholder: string;
   required: boolean;
   validator: string;
+  validatorRequiredMessage: string;
   order: number;
   controlType: string;
   type: string;
@@ -21,6 +22,7 @@ export class FormField<T> {
       placeholder?: string;
       required?: boolean;
       validator?: string;
+      validatorRequiredMessage?: string;
       order?: number;
       controlType?: string;
       type?: string;
@@ -34,6 +36,7 @@ export class FormField<T> {
     this.checkLabel = options.checkLabel || '';
     this.placeholder = options.placeholder || '';
     this.required = !!options.required;
+    this.validatorRequiredMessage = options.validatorRequiredMessage || '';
     this.validator = options.validator || '';
     this.order = options.order === undefined ? 1 : options.order;
     this.controlType = options.controlType || '';

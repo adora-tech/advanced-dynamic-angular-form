@@ -62,6 +62,7 @@ export class FormfieldControlService {
         label: 'Prenume',
         placeholder: 'Completează...',
         required: true,
+        validatorRequiredMessage: 'Prenumele este obligatoriu',
         validator: 'prenume',
         order: 1
       }),
@@ -72,6 +73,7 @@ export class FormfieldControlService {
         label: 'Nume',
         placeholder: 'Completează...',
         required: true,
+        validatorRequiredMessage: 'Numele este obligatoriu',
         validator: 'nume',
         order: 2
       }),
@@ -82,6 +84,7 @@ export class FormfieldControlService {
         label: 'Telefon',
         placeholder: '0XXXYYYZZZ',
         required: true,
+        validatorRequiredMessage: 'Telefonul este obligatoriu',
         validator: 'telefon',
         order: 3
       }),
@@ -93,6 +96,7 @@ export class FormfieldControlService {
         placeholder: 'prenume.nume@domeniu.tld',
         type: 'email',
         required: true,
+        validatorRequiredMessage: 'E-mailul este obligatoriu',
         validator: 'email',
         order: 4
       }),
@@ -103,6 +107,7 @@ export class FormfieldControlService {
         label: 'Născut',
         placeholder: 'ZZ-LL-AAAA',
         required: true,
+        validatorRequiredMessage: 'Data nașterii este obligatorie',
         validator: 'nascut',
         order: 5
       }),
@@ -120,6 +125,7 @@ export class FormfieldControlService {
           {value: 'Technical Support / Helpdesk Engineer'}
         ],
         required: true,
+        validatorRequiredMessage: 'Funcția este obligatorie',
         validator: 'functie',
         order: 7
       }),
@@ -134,6 +140,7 @@ export class FormfieldControlService {
           {key: 'constanta', value: 'Constanța'}
         ],
         required: true,
+        validatorRequiredMessage: 'Orașul este obligatoriu',
         order: 7
       }),
 
@@ -144,6 +151,7 @@ export class FormfieldControlService {
         placeholder: 'Completează...',
         type: 'observatii',
         required: true,
+        validatorRequiredMessage: 'Observațiile sunt obligatorii',
         validator: 'observatii',
         order: 8
       }),
@@ -154,6 +162,7 @@ export class FormfieldControlService {
         label: 'Tip Apel',
         type: 'tipApel',
         required: true,
+        validatorRequiredMessage: 'Tip apel este obligatoriu',
         options: [
           {key: 'informatii', value: 'Informații'},
           {key: 'intrerupt', value: 'Întrerupt'}
@@ -168,6 +177,7 @@ export class FormfieldControlService {
         checkLabel: 'Acceptă prelucrarea datelor cu caracter personal',
         type: 'gdpr',
         required: true,
+        validatorRequiredMessage: 'Confirmarea este obligatorie',
         validator: 'gdpr',
         order: 10
       })
