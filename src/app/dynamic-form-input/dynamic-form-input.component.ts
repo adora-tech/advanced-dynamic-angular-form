@@ -9,13 +9,13 @@ import {FormField} from '../form-field';
 })
 export class DynamicFormInputComponent {
 
-  @Input() input: FormField<string>;
+  @Input() formField: FormField<string>;
   @Input() form: FormGroup;
 
   @Input() isSubmitted: boolean;
 
-  get key() {
-    return this.form.controls[this.input.key];
+  get nameControl() {
+    return this.form.controls[this.formField.key];
   }
 
   onlyNumbers = (event: any) => {

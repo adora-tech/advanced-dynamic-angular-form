@@ -16,30 +16,30 @@ export class FormfieldControlService {
     inputs.forEach(input => {
       const validator: ValidatorFn[] = input.required ? [Validators.required] : [];
       switch (input.validator) {
-        case 'prenume':
+        case 'prenumeValidator':
           validator.push(Validators.minLength(3));
           break;
-        case 'nume':
+        case 'numeValidator':
           validator.push(Validators.minLength(3));
           break;
-        case 'telefon':
+        case 'telefonValidator':
           validator.push(Validators.pattern('^[0-9]*$'));
           validator.push(Validators.minLength(10));
           validator.push(Validators.maxLength(10));
           break;
-        case 'email':
+        case 'emailValidator':
           validator.push(Validators.email);
           break;
-        case 'nascut':
+        case 'nascutValidator':
           validator.push(Validators.pattern(/^(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-[0-9]{4}$/));
           break;
-        case 'functie':
+        case 'functieValidator':
           validator.push(Validators.pattern('[a-zA-Z ()/]*'));
           break;
-        case 'observatii':
+        case 'observatiiValidator':
           validator.push(Validators.minLength(3));
           break;
-        case 'gdpr':
+        case 'gdprValidator':
           validator.push(Validators.requiredTrue);
           break;
         default:
@@ -63,7 +63,7 @@ export class FormfieldControlService {
         placeholder: 'Completează...',
         required: true,
         validatorRequiredMessage: 'Prenumele este obligatoriu',
-        validator: 'prenume',
+        validator: 'prenumeValidator',
         order: 1
       }),
 
@@ -74,7 +74,7 @@ export class FormfieldControlService {
         placeholder: 'Completează...',
         required: true,
         validatorRequiredMessage: 'Numele este obligatoriu',
-        validator: 'nume',
+        validator: 'numeValidator',
         order: 2
       }),
 
@@ -85,7 +85,7 @@ export class FormfieldControlService {
         placeholder: '0XXXYYYZZZ',
         required: true,
         validatorRequiredMessage: 'Telefonul este obligatoriu',
-        validator: 'telefon',
+        validator: 'telefonValidator',
         order: 3
       }),
 
@@ -97,7 +97,7 @@ export class FormfieldControlService {
         type: 'email',
         required: true,
         validatorRequiredMessage: 'E-mailul este obligatoriu',
-        validator: 'email',
+        validator: 'emailValidator',
         order: 4
       }),
 
@@ -108,7 +108,7 @@ export class FormfieldControlService {
         placeholder: 'ZZ-LL-AAAA',
         required: true,
         validatorRequiredMessage: 'Data nașterii este obligatorie',
-        validator: 'nascut',
+        validator: 'nascutValidator',
         order: 5
       }),
 
@@ -126,7 +126,7 @@ export class FormfieldControlService {
         ],
         required: true,
         validatorRequiredMessage: 'Funcția este obligatorie',
-        validator: 'functie',
+        validator: 'functieValidator',
         order: 7
       }),
 
@@ -152,7 +152,7 @@ export class FormfieldControlService {
         type: 'observatii',
         required: true,
         validatorRequiredMessage: 'Observațiile sunt obligatorii',
-        validator: 'observatii',
+        validator: 'observatiiValidator',
         order: 8
       }),
 
@@ -178,7 +178,7 @@ export class FormfieldControlService {
         type: 'gdpr',
         required: true,
         validatorRequiredMessage: 'Confirmarea este obligatorie',
-        validator: 'gdpr',
+        validator: 'gdprValidator',
         order: 10
       })
 
