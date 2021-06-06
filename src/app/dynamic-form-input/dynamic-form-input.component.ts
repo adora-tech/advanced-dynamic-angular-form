@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {FormField} from '../form-field';
 
@@ -14,7 +14,7 @@ export class DynamicFormInputComponent {
 
   @Input() isSubmitted: boolean;
 
-  get nameControl() {
+  get formFieldControl() {
     return this.form.controls[this.formField.key];
   }
 
