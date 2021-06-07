@@ -1,21 +1,26 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {FormField} from '../form-field';
+
+declare var $: any;
 
 @Component({
   selector: 'app-dynamic-form-input',
   templateUrl: './dynamic-form-input.component.html',
   styleUrls: ['./dynamic-form-input.component.css']
 })
-export class DynamicFormInputComponent {
+export class DynamicFormInputComponent implements OnInit {
 
   @Input() formField: FormField<string>;
   @Input() form: FormGroup;
 
   @Input() isSubmitted: boolean;
 
-  get formFieldControl() {
-    return this.form.controls[this.formField.key];
+  ngOnInit() {
+  }
+
+  get nameFieldControl() {
+    return this.form.controls[this.formField.name];
   }
 
   onlyNumbers = (event: any) => {

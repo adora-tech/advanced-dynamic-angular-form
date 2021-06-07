@@ -11,11 +11,11 @@ export class FormfieldControlService {
   constructor() {
   }
 
-  toFormGroup(inputs: FormField<string>[]): FormGroup {
-    const group: any = {};
-    inputs.forEach(input => {
-      const validator: ValidatorFn[] = input.required ? [Validators.required] : [];
-      switch (input.validator) {
+  toFormGroup(formFields: FormField<string>[]): FormGroup {
+    const fieldsGroup: any = {};
+    formFields.forEach(formField => {
+      const validator: ValidatorFn[] = formField.required ? [Validators.required] : [];
+      switch (formField.validator) {
         case 'prenumeValidator':
           validator.push(Validators.minLength(3));
           break;
@@ -45,77 +45,81 @@ export class FormfieldControlService {
         default:
           break;
       }
-      group[input.key] = validator.length > 0 ? new FormControl(input.value || '', validator)
-        : new FormControl(input.value || '');
+      fieldsGroup[formField.name] = validator.length > 0 ? new FormControl(formField.value || '', validator)
+        : new FormControl(formField.value || '');
     });
-
-    return new FormGroup(group);
+    return new FormGroup(fieldsGroup);
   }
 
   getFormFields() {
-
-    const inputs: FormField<string>[] = [
-
+    const formFieldsArray: FormField<string>[] = [
       new FormField<string>({
-        controlType: 'prenume',
-        key: 'prenume',
+        fieldType: 'type-text',
+        name: 'prenume',
         label: 'Prenume',
+        type: 'text',
         placeholder: 'Completează...',
         required: true,
         validatorRequiredMessage: 'Prenumele este obligatoriu',
+        validatorMinLengthMessage: 'Lungimea minimă este de 3 caractere',
         validator: 'prenumeValidator',
         order: 1
       }),
-
       new FormField<string>({
-        controlType: 'nume',
-        key: 'nume',
+        fieldType: 'type-text',
+        name: 'nume',
         label: 'Nume',
+        type: 'text',
         placeholder: 'Completează...',
         required: true,
         validatorRequiredMessage: 'Numele este obligatoriu',
+        validatorMinLengthMessage: 'Lungimea minimă este de 3 caractere',
         validator: 'numeValidator',
         order: 2
       }),
-
       new FormField<string>({
-        controlType: 'telefon',
-        key: 'telefon',
+        fieldType: 'type-tel',
+        name: 'telefon',
         label: 'Telefon',
+        type: 'tel',
         placeholder: '0XXXYYYZZZ',
         required: true,
         validatorRequiredMessage: 'Telefonul este obligatoriu',
+        validatorMinLengthMessage: 'Lungimea minimă este de 10 cifre',
+        validatorMaxLengthMessage: 'Lungimea maximă este de 10 cifre',
+        validatorPatternMessage: 'Exclusiv cifre',
         validator: 'telefonValidator',
         order: 3
       }),
-
       new FormField<string>({
-        controlType: 'email',
-        key: 'email',
+        fieldType: 'type-email',
+        name: 'email',
         label: 'E-mail',
-        placeholder: 'prenume.nume@domeniu.tld',
         type: 'email',
+        placeholder: 'prenume.nume@domeniu.tld',
         required: true,
         validatorRequiredMessage: 'E-mailul este obligatoriu',
+        validatorEmailMessage: 'Trebuie să fie o adresă de e-mail validă',
         validator: 'emailValidator',
         order: 4
       }),
-
       new FormField<string>({
-        controlType: 'nascut',
-        key: 'nascut',
+        fieldType: 'type-date',
+        name: 'nascut',
         label: 'Născut',
+        type: 'date',
         placeholder: 'ZZ-LL-AAAA',
         required: true,
         validatorRequiredMessage: 'Data nașterii este obligatorie',
+        validatorPatternMessage: 'Trebuie să fie o dată validă, în formatul ZZ-LL-AAAA',
         validator: 'nascutValidator',
         order: 5
       }),
-
       new FormField<string>({
-        controlType: 'functie',
-        key: 'functie',
+        fieldType: 'type-datalist',
+        name: 'functie',
         label: 'Funcție',
+        type: 'text',
         placeholder: 'Scrie pentru a căuta...',
         datalists: [
           {value: 'Programator / Developer'},
@@ -126,13 +130,13 @@ export class FormfieldControlService {
         ],
         required: true,
         validatorRequiredMessage: 'Funcția este obligatorie',
+        validatorPatternMessage: 'Sunt permise doar litere și caracterele speciale / ( )',
         validator: 'functieValidator',
         order: 7
       }),
-
       new FormField<string>({
-        controlType: 'oras',
-        key: 'oras',
+        fieldType: 'type-select',
+        name: 'oras',
         label: 'Oraș',
         options: [
           {key: 'bucuresti', value: 'București'},
@@ -143,24 +147,21 @@ export class FormfieldControlService {
         validatorRequiredMessage: 'Orașul este obligatoriu',
         order: 7
       }),
-
       new FormField<string>({
-        controlType: 'observatii',
-        key: 'observatii',
+        fieldType: 'type-textarea',
+        name: 'observatii',
         label: 'Observații',
         placeholder: 'Completează...',
-        type: 'observatii',
         required: true,
         validatorRequiredMessage: 'Observațiile sunt obligatorii',
+        validatorMinLengthMessage: 'Lungimea minimă este de 3 caractere',
         validator: 'observatiiValidator',
         order: 8
       }),
-
       new FormField<string>({
-        controlType: 'tipApel',
-        key: 'tipApel',
+        fieldType: 'type-radio',
+        name: 'tipApel',
         label: 'Tip Apel',
-        type: 'tipApel',
         required: true,
         validatorRequiredMessage: 'Tip apel este obligatoriu',
         options: [
@@ -169,22 +170,18 @@ export class FormfieldControlService {
         ],
         order: 9
       }),
-
       new FormField<string>({
-        controlType: 'gdpr',
-        key: 'gdpr',
+        fieldType: 'type-checkbox',
+        name: 'gdpr',
         label: 'Gdpr',
         checkLabel: 'Acceptă prelucrarea datelor cu caracter personal',
-        type: 'gdpr',
         required: true,
         validatorRequiredMessage: 'Confirmarea este obligatorie',
         validator: 'gdprValidator',
         order: 10
       })
-
     ];
-
-    return of(inputs.sort((a, b) => a.order - b.order));
+    return of(formFieldsArray.sort((a, b) => a.order - b.order));
   }
 
 }
