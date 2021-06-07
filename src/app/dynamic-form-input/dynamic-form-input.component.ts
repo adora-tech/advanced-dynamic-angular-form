@@ -1,23 +1,17 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {FormField} from '../form-field';
-
-declare var $: any;
 
 @Component({
   selector: 'app-dynamic-form-input',
   templateUrl: './dynamic-form-input.component.html',
   styleUrls: ['./dynamic-form-input.component.css']
 })
-export class DynamicFormInputComponent implements OnInit {
+export class DynamicFormInputComponent {
 
   @Input() formField: FormField<string>;
   @Input() form: FormGroup;
-
   @Input() isSubmitted: boolean;
-
-  ngOnInit() {
-  }
 
   get nameFieldControl() {
     return this.form.controls[this.formField.name];
